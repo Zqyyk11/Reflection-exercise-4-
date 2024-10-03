@@ -1,7 +1,7 @@
 library(tidyverse)
 library(ipumsr)
 
-data <- read_csv("STA304-5/usa_00003.csv")
+data <- read_csv("usa_00002.csv")
 
 
 # Filter for respondents with a doctoral degree (EDUCD == "Doctoral degree")
@@ -34,4 +34,5 @@ comparison <- estimates %>%
 # Output result
 print(comparison)
 
-write_csv(comparison, "STA304-5/comparison_results.csv")
+write_csv(comparison, "comparison_results.csv")
+

@@ -2,7 +2,7 @@
 title: "IPUMS 2022 ACS Data Analysis Using Ratio Estimation"
 # subtitle:
 author: 
-  - Yizhe Chen
+  - Charlie Zhang
 date: today
 date-format: long
 format: pdf
