@@ -1,0 +1,67 @@
+---
+title: "IPUMS 2022 ACS Data Analysis Using Ratio Estimation"
+# subtitle:
+author: 
+  - Yizhe Chen
+date: today
+date-format: long
+format: pdf
+number-sections: true
+---
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(palmerpenguins)
+```
+
+
+# Instructions on How to Obtain the Data
+To obtain the IPUMS 2022 ACS data:
+1. Visit the [IPUMS USA website](https://usa.ipums.org/usa/).
+2. Register for an account or log in if you already have one.
+3. Select the 2022 ACS dataset and choose relevant variables such as:
+   - `STATEICP`: State codes for each respondent.
+   - `EDUCD`: Educational attainment with detailed categories, including doctoral degrees.
+4. Download the dataset in CSV format. The file may be compressed, so you need to unzip it using:
+   ```bash
+   gunzip usa_00003.csv.gz
+   ```
+# Overview of the Ratio Estimators Approach
+The ratio estimator approach is used when we want to estimate unknown totals in a population based on the known total in a sample and some measured characteristics.
+
+We know the total number of respondents in California is 391,171. We can calculate the ratio of doctoral degree holders in California to the total respondents, then apply this ratio to estimate the total number of respondents in other states.
+
+Ratio = Number of doctoral holders in California / 391171
+
+We apply this ratio to the number of doctoral degree holders in other states to estimate their total respondent numbers.
+
+# Estimates and the Actual Number of Respondents
+We computed the estimated total respondents based on the ratio estimator approach. Below is the table showing the estimated number of respondents and the actual number of doctoral degree holders in each state.
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+
+# Load the comparison results and display the table
+comparison <- read_csv("comparison_results.csv") %>%
+  select(-estimated_doctoral)
+
+knitr::kable(comparison, format = "pipe", align = "l")
+```
+ 
+# Explanation of Differences
+
+There are several reasons why the estimated total number of respondents may differ from the actual numbers:
+
+- State-level variations: The proportion of doctoral degree holders in California may not be representative of the proportion in other states. States with a higher or lower proportion of doctoral degree holders compared to California will have estimates that deviate from their actual totals.
+
+- Population diversity: Each state has different demographic compositions. For instance, states with larger metropolitan areas or research universities may have a higher concentration of doctoral degree holders, skewing the estimates when compared to smaller or more rural states.
+
+- Sampling variability: The IPUMS dataset is a sample of the population. Differences between the sample and the actual population (especially in smaller states) can cause the ratio estimator to be inaccurate.
+
+
